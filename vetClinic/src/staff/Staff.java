@@ -2,8 +2,7 @@ package staff;
 
 public abstract class Staff {
 	
-	private String fname;
-	private String surname;
+	private String name;
 	private int id;
 	private static int idCounter = 0;
 	protected double salaryLevel;
@@ -13,31 +12,20 @@ public abstract class Staff {
 	}
 
 	
-	public Staff(String name, String surname, double salaryLevel) {
-		this.fname = name;
-		this.surname = surname;
+	public Staff(String name, double salaryLevel) {
+		this.name = name;
 		this.id = idCounter ++;
 		this.salaryLevel = salaryLevel;
 	}
 
 
-	public String getFname() {
-		return fname;
+	public String getName() {
+		return name;
 	}
 
 
-	public void setFname(String fname) {
-		this.fname = fname;
-	}
-
-
-	public String getSurname() {
-		return surname;
-	}
-
-
-	public void setSurname(String surname) {
-		this.surname = surname;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 
@@ -62,6 +50,7 @@ public abstract class Staff {
 	
 	@Override
 	public String toString() {
-		return "Staff [fname=" + fname + ", surname=" + surname + ", id=" + id + ", salaryLevel=" + salaryLevel + "]";
+		return "Staff [Name = " + name + " , ID = " + id + ", Salary = " + salaryLevel + "]";
 	}
+
 }
