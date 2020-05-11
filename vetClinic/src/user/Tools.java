@@ -1,5 +1,7 @@
 package user;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -207,22 +209,22 @@ public class Tools {
 			Employees.add(Vet);
 		}
 		for (int i = 0; i < 10; i++) {
-			Staff Nur = new Nurse(getRandomName("staff"), 1000);
+			Staff Nur = new Nurse(getRandomName("staff"), 700);
 			Employees.add(Nur);
 		}
 		for (int i = 0; i < 10; i++) {
-			Staff Tra = new Trainee_Vet(getRandomName("staff"), 1000);
+			Staff Tra = new Trainee_Vet(getRandomName("staff"), 500);
 			Employees.add(Tra);
 		}
 
 		// ===================ADMIN STAFF===================
 
 		for (int i = 0; i < 5; i++) {
-			Staff Rec = new Receptionist(getRandomName("staff"), 1000);
+			Staff Rec = new Receptionist(getRandomName("staff"), 400);
 			Employees.add(Rec);
 		}
 		for (int i = 0; i < 5; i++) {
-			Staff HRs = new HR_Staff(getRandomName("staff"), 1000);
+			Staff HRs = new HR_Staff(getRandomName("staff"), 600);
 			Employees.add(HRs);
 		}
 	}
@@ -261,7 +263,8 @@ public class Tools {
 				cla = staff.getClass().getSimpleName();
 			}
 			System.out.println(
-					"Employee Name: " + staff.getName() + "\nJob Position: " + cla + "\n========================");
+					"Employee Name: " + staff.getName() + "\nEmployee ID: " + staff.getId() + "\nJob Position: " + cla
+							+ "\nSalary Level: " + staff.getSalaryLevel() + "\n\n==============================\n");
 		}
 	}
 
@@ -277,8 +280,9 @@ public class Tools {
 				} else {
 					cla = staff.getClass().getSimpleName();
 				}
-				System.out.println(
-						"Employee Name: " + staff.getName() + "\nJob Position: " + cla + "\n========================");
+				System.out.println("Employee Name: " + staff.getName() + "\nEmployee ID: " + staff.getId()
+						+ "\nJob Position: " + cla + "\nSalary Level: " + staff.getSalaryLevel()
+						+ "\n\n==============================\n");
 			}
 		}
 
@@ -288,8 +292,99 @@ public class Tools {
 		for (Animal animal : Animals) {
 			System.out.println("Pet Name: " + animal.getName() + "\nType: " + animal.getClass().getSimpleName()
 					+ "\nAge: " + animal.getAge() + "\nMedical Condition: " + animal.getMedCondition()
-					+ "\n========================");
+					+ "\n\n==============================\n");
 		}
+	}
+
+	public void AnimalsListByType(String type) {
+
+		for (Animal animal : Animals) {
+			if (animal.getClass().getSimpleName().equals(type)) {
+				System.out.println("Pet Name: " + animal.getName() + "\nType: " + animal.getClass().getSimpleName()
+						+ "\nAge: " + animal.getAge() + "\nMedical Condition: " + animal.getMedCondition()
+						+ "\n========================");
+			}
+		}
+	}
+
+	public void search(String type, String name) {
+		boolean found = false;
+		if (type == "employee") {
+			for (Staff staff : Employees) {
+				if (staff.getName().equals(name)) {
+					found = true;
+					System.out.println("\n\n==============================\n" + "Employee Name: " + staff.getName() + "\nEmployee ID: " + staff.getId()
+							+ "\nJob Position: " + staff.getClass().getSimpleName() + "\nSalary Level: "
+							+ staff.getSalaryLevel() + "\n==============================\n");
+				}
+			}
+			if (found == false) {
+				System.out.println("Not Found!\n");
+			}
+		}
+
+		if (type == "animal") {
+			for (Animal animal : Animals) {
+				if (animal.getName().equals(name)) {
+					found = true;
+					System.out.println("\n\n========================\n" + "Pet Name: " + animal.getName() + "\nType: " + animal.getClass().getSimpleName()
+							+ "\nAge: " + animal.getAge() + "\nMedical Condition: " + animal.getMedCondition()
+							+ "\n========================\n");
+				}
+			}
+			if (found == false) {
+				System.out.println("Not Found!\n");
+			}
+		}
+		
+
+	}
+	
+	public static int getInput(String prompt) {
+
+		int input = 0; // variable to store user input
+		boolean valid; // variable to check if input is a number
+		BufferedReader myReader = new BufferedReader(new InputStreamReader(System.in)); // bufferedreader declaration
+
+		do {
+			System.out.println(prompt); // print message in prompt variable
+
+			try {
+				input = Integer.parseInt(myReader.readLine()); // Parses the string argument as a signed decimal integer
+																// and store the inserted value in input variable
+				valid = true; // if valid true leaves the loop
+
+			} catch (Exception e) {
+				System.out.println("That is not a number!"); // if not an number display error message
+				valid = false; // keep user in the loop to ask for a valid input
+			}
+		} while (!valid); // finish loop when valid = true
+
+		return input; // return user input
+	}
+	
+	
+	public static String getStringInput(String prompt) {
+
+		String input = null; // variable to store user input
+		boolean valid; // variable to check if input is a number
+		BufferedReader myReader = new BufferedReader(new InputStreamReader(System.in)); // bufferedreader declaration
+
+		do {
+			System.out.println(prompt); // print message in prompt variable
+
+			try {
+				input = myReader.readLine(); // Parses the string argument as a signed decimal integer
+																// and store the inserted value in input variable
+				valid = true; // if valid true leaves the loop
+
+			} catch (Exception e) {
+				System.out.println("Somethig went wrong, try again!"); 
+				valid = false; // keep user in the loop to ask for a valid input
+			}
+		} while (!valid); // finish loop when valid = true
+
+		return input; // return user input
 	}
 
 }

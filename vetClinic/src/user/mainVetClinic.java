@@ -1,8 +1,5 @@
 package user;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
 public class mainVetClinic {
 
 	Tools tools = new Tools();
@@ -25,7 +22,7 @@ public class mainVetClinic {
 						 + "=============================\n" 
 						 + "          MAIN MENU          \n");
 		do {
-			userOption = getInput("1>   Staff Menu.\n" 
+			userOption = Tools.getInput("1>   Staff Menu.\n" 
 								+ "2>   Animal Menu.\n\n" 
 								+ "0>   Exit.\n");
 
@@ -58,7 +55,7 @@ public class mainVetClinic {
 						 + "=============================\n" 
 						 + "          STAFF MENU         \n");
 		do {
-			userOption = getInput("1>   List all staff.\n" 
+			userOption = Tools.getInput("1>   List all staff.\n" 
 								+ "2>   List staff by categories.\n"
 								+ "3>   List all Admin staff performing a certain task.\n"
 								+ "4>   Search for a specific member of staff by name.\n\n" 
@@ -73,7 +70,9 @@ public class mainVetClinic {
 			} else if (userOption == 3) {
 
 			} else if (userOption == 4) {
-
+				String userInput = Tools.getStringInput("Type the name of the employee:");
+				tools.search("employee", userInput);
+				
 			} else if (userOption == 0) {
 				System.out.println("\n\n\n\n\n\n\n\n\n");
 				back = true;
@@ -96,7 +95,7 @@ public class mainVetClinic {
 						 + "=============================\n" 
 						 + "         ANIMAL MENU         \n");
 		do {
-			userOption = getInput("1>   List all animals.\n" 
+			userOption = Tools.getInput("1>   List all animals.\n" 
 								+ "2>   List animals by various types.\n"
 								+ "3>   Search for a specific animal by name.\n"
 								+ "4>   List all the animals assigned to a member of medical staff.\n"
@@ -106,9 +105,12 @@ public class mainVetClinic {
 			if (userOption == 1) {
 				tools.AnimalsList();
 			} else if (userOption == 2) {
-
+				System.out.println("\n\n\n\n\n\n\n\n\n");
+				animalByType();
+				back = true;
 			} else if (userOption == 3) {
-
+				String userInput = Tools.getStringInput("Type the name of the animal:");
+				tools.search("animal", userInput);
 			} else if (userOption == 4) {
 
 			} else if (userOption == 5) {
@@ -135,7 +137,7 @@ public class mainVetClinic {
 						 + "=============================\n" 
 						 + "      STAFF CATEGORIES       \n");
 		do {
-			userOption = getInput("1>   Veterinarians.\n" 
+			userOption = Tools.getInput("1>   Veterinarians.\n" 
 								+ "2>   Nurses.\n"
 								+ "3>   Trainee Veterinarians.\n"
 								+ "4>   Receptionists\n" 
@@ -163,29 +165,46 @@ public class mainVetClinic {
 		} while (!back);
 
 	}
+	
+	public void animalByType() {
 
-	public static int getInput(String prompt) {
+		int userOption = 0;
+		boolean back = false;
 
-		int input = 0; // variable to store user input
-		boolean valid; // variable to check if input is a number
-		BufferedReader myReader = new BufferedReader(new InputStreamReader(System.in)); // bufferedreader declaration
-
+		System.out.println("=============================\n" 
+						 + "       Veterinary Clinic     \n"
+						 + "=============================\n" 
+						 + "         ANIMAL TYPES        \n");
 		do {
-			System.out.println(prompt); // print message in prompt variable
+			userOption = Tools.getInput("1>   Dogs.\n" 
+								+ "2>   Cats.\n"
+								+ "3>   Birds.\n"
+								+ "4>   Rabbits\n" 
+								+ "5>   Hamsters\n\n" 
+								+ "0>   Back.\n");
 
-			try {
-				input = Integer.parseInt(myReader.readLine()); // Parses the string argument as a signed decimal integer
-																// and store the inserted value in input variable
-				valid = true; // if valid true leaves the loop
-
-			} catch (Exception e) {
-				System.out.println("That is not a number!"); // if not an number display error message
-				valid = false; // keep user in the loop to ask for a valid input
+			if (userOption == 1) {
+				tools.AnimalsListByType("Dog");
+			} else if (userOption == 2) {
+				tools.AnimalsListByType("Cat");
+			} else if (userOption == 3) {
+				tools.AnimalsListByType("Bird");
+			} else if (userOption == 4) {
+				tools.AnimalsListByType("Rabbit");
+			} else if (userOption == 5) {
+				tools.AnimalsListByType("Hamster");
+			} else if (userOption == 0) {
+				System.out.println("\n\n\n\n\n\n\n\n\n");
+				back = true;
+				animalMenu();
+			} else {
+				System.out.println("That is not an option."); // in case user type an option that doesnt exist
 			}
-		} while (!valid); // finish loop when valid = true
 
-		return input; // return user input
+		} while (!back);
+
 	}
+
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
