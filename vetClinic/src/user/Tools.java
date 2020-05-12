@@ -25,21 +25,12 @@ public class Tools {
 
 	ArrayList<Staff> Employees = new ArrayList<Staff>();
 	ArrayList<Animal> Animals = new ArrayList<Animal>();
-	
-	Queue<Animal> queueOne = new LinkedList<Animal>();
-	Queue<Animal> queueTwo = new LinkedList<Animal>();
-	Queue<Animal> queueThree = new LinkedList<Animal>();
-	Queue<Animal> queueFour = new LinkedList<Animal>();
-	Queue<Animal> queueFive = new LinkedList<Animal>();
-	Queue<Animal> queueSix = new LinkedList<Animal>();
-	Queue<Animal> queueSeven = new LinkedList<Animal>();
-	Queue<Animal> queueEight = new LinkedList<Animal>();
-	Queue<Animal> queueNine = new LinkedList<Animal>();
-	Queue<Animal> queueTen = new LinkedList<Animal>();
-	
-	
-	HashMap <Staff, Queue> map = new HashMap <Staff, Queue>();
-	
+
+	ArrayList<Queue<Animal>> queueArray = new ArrayList<Queue<Animal>>();
+
+
+
+	HashMap<Staff, Queue> map = new HashMap<Staff, Queue>();
 
 	String[] firstNames = { "Jack", "James", "Daniel", "Conor", "Sean", "Adam", "Ryan", "Michael", "Harry", "Noah",
 			"Thomas", "Alex", "Luke", "Oisin", "Charlie", "Patrick", "Cian", "Liam", "Darragh", "Dylan", "Jamie",
@@ -331,9 +322,9 @@ public class Tools {
 			for (Staff staff : Employees) {
 				if (staff.getName().equals(name)) {
 					found = true;
-					System.out.println("\n\n==============================\n" + "Employee Name: " + staff.getName() + "\nEmployee ID: " + staff.getId()
-							+ "\nJob Position: " + staff.getClass().getSimpleName() + "\nSalary Level: "
-							+ staff.getSalaryLevel() + "\n==============================\n");
+					System.out.println("\n\n==============================\n" + "Employee Name: " + staff.getName()
+							+ "\nEmployee ID: " + staff.getId() + "\nJob Position: " + staff.getClass().getSimpleName()
+							+ "\nSalary Level: " + staff.getSalaryLevel() + "\n==============================\n");
 				}
 			}
 			if (found == false) {
@@ -345,19 +336,18 @@ public class Tools {
 			for (Animal animal : Animals) {
 				if (animal.getName().equals(name)) {
 					found = true;
-					System.out.println("\n\n========================\n" + "Pet Name: " + animal.getName() + "\nType: " + animal.getClass().getSimpleName()
-							+ "\nAge: " + animal.getAge() + "\nMedical Condition: " + animal.getMedCondition()
-							+ "\n========================\n");
+					System.out.println("\n\n========================\n" + "Pet Name: " + animal.getName() + "\nType: "
+							+ animal.getClass().getSimpleName() + "\nAge: " + animal.getAge() + "\nMedical Condition: "
+							+ animal.getMedCondition() + "\n========================\n");
 				}
 			}
 			if (found == false) {
 				System.out.println("Not Found!\n");
 			}
 		}
-		
 
 	}
-	
+
 	public static int getInput(String prompt) {
 
 		int input = 0; // variable to store user input
@@ -380,8 +370,7 @@ public class Tools {
 
 		return input; // return user input
 	}
-	
-	
+
 	public static String getStringInput(String prompt) {
 
 		String input = null; // variable to store user input
@@ -393,81 +382,52 @@ public class Tools {
 
 			try {
 				input = myReader.readLine(); // Parses the string argument as a signed decimal integer
-																// and store the inserted value in input variable
+												// and store the inserted value in input variable
 				valid = true; // if valid true leaves the loop
 
 			} catch (Exception e) {
-				System.out.println("Somethig went wrong, try again!"); 
+				System.out.println("Somethig went wrong, try again!");
 				valid = false; // keep user in the loop to ask for a valid input
 			}
 		} while (!valid); // finish loop when valid = true
 
 		return input; // return user input
 	}
-	
-	public void animalQueue () {
-		
-		for (int i = 0 ; i < 1000; i++) {
-			if (i<100) {
-				queueOne.add(Animals.get(i));
-			} else if (i>=100 && i<200) {
-				queueTwo.add(Animals.get(i));
-			} else if (i>=200 && i<300) {
-				queueThree.add(Animals.get(i));
-			} else if (i>=300 && i<400) {
-				queueFour.add(Animals.get(i));
-			} else if (i>=400 && i<500) {
-				queueFive.add(Animals.get(i));
-			} else if (i>=500 && i<600) {
-				queueSix.add(Animals.get(i));
-			} else if (i>=600 && i<700) {
-				queueSeven.add(Animals.get(i));
-			} else if (i>=700 && i<800) {
-				queueEight.add(Animals.get(i));
-			} else if (i>=800 && i<900) {
-				queueNine.add(Animals.get(i));
-			} else {
-				queueTen.add(Animals.get(i));
-			}
-		}
 
-		// System.out.println(queueOne);
-		// System.out.println(queueTwo);
-		// System.out.println(queueOne.toArray()[1].getClass().getSimpleName());
-		// System.out.println("Queue 1: " + queueOne.size());
-				
+	public void animalQueue() {
+
+		int queueSize = Animals.size() / countVet();
+
+		for (int i = 0; i < countVet(); i++) { // loop 10x (countVet)
+			Queue<Animal> queue = new LinkedList<Animal>(); // cria uma queue 10x
+			for (int n = 0; n < queueSize; n++) { // Loop 100x (queueSize)
+				queue.add(Animals.get((i * queueSize) + n));
+
+			}
+			queueArray.add(queue);
+		}
 	}
-	
+
 	public void assignMedical() {
+
+		int mapCount = 0;
 		
-		String queue = null;
-		
-		for (Staff staff : Employees) {
-			if (staff.getClass().getSimpleName().equals("Veterinarian")) {
-				if (map.size()==0) {
-					map.put(staff , queueOne);
-				} else if (map.size()==1) {
-					map.put(staff , queueTwo);
-				} else if (map.size()==2) {
-					map.put(staff , queueThree);
-				} else if (map.size()==3) {
-					map.put(staff , queueFour);
-				} else if (map.size()==4) {
-					map.put(staff , queueFive);
-				} else if (map.size()==5) {
-					map.put(staff , queueSix);
-				}  else if (map.size()==6) {
-					map.put(staff , queueSeven);
-				}  else if (map.size()==7) {
-					map.put(staff , queueEight);
-				} else if (map.size()==8) {
-					map.put(staff , queueNine);
-				} else {
-					map.put(staff , queueTen);
+		for (int i = 0 ; i < Employees.size() ; i++) {								//Loop 30x (employees)
+			if (Employees.get(i).getClass().getSimpleName().equals("Veterinarian")) {		//If employee is a veterinarian
+				map.put(Employees.get(i) , queueArray.get(mapCount));
+					mapCount ++;
 				}
 			}
+	}
+
+	public int countVet() {
+		int count = 0;
+		for (Staff staff : Employees) {
+			if (staff.getClass().getSimpleName().equals("Veterinarian")) {
+				count++;
+			}
 		}
-		System.out.println(map);
+		return count;
 	}
 
 }
