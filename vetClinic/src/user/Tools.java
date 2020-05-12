@@ -3,6 +3,9 @@ package user;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Random;
 
 import animals.Animal;
@@ -22,6 +25,21 @@ public class Tools {
 
 	ArrayList<Staff> Employees = new ArrayList<Staff>();
 	ArrayList<Animal> Animals = new ArrayList<Animal>();
+	
+	Queue<Animal> queueOne = new LinkedList<Animal>();
+	Queue<Animal> queueTwo = new LinkedList<Animal>();
+	Queue<Animal> queueThree = new LinkedList<Animal>();
+	Queue<Animal> queueFour = new LinkedList<Animal>();
+	Queue<Animal> queueFive = new LinkedList<Animal>();
+	Queue<Animal> queueSix = new LinkedList<Animal>();
+	Queue<Animal> queueSeven = new LinkedList<Animal>();
+	Queue<Animal> queueEight = new LinkedList<Animal>();
+	Queue<Animal> queueNine = new LinkedList<Animal>();
+	Queue<Animal> queueTen = new LinkedList<Animal>();
+	
+	
+	HashMap <Staff, Queue> map = new HashMap <Staff, Queue>();
+	
 
 	String[] firstNames = { "Jack", "James", "Daniel", "Conor", "Sean", "Adam", "Ryan", "Michael", "Harry", "Noah",
 			"Thomas", "Alex", "Luke", "Oisin", "Charlie", "Patrick", "Cian", "Liam", "Darragh", "Dylan", "Jamie",
@@ -385,6 +403,71 @@ public class Tools {
 		} while (!valid); // finish loop when valid = true
 
 		return input; // return user input
+	}
+	
+	public void animalQueue () {
+		
+		for (int i = 0 ; i < 1000; i++) {
+			if (i<100) {
+				queueOne.add(Animals.get(i));
+			} else if (i>=100 && i<200) {
+				queueTwo.add(Animals.get(i));
+			} else if (i>=200 && i<300) {
+				queueThree.add(Animals.get(i));
+			} else if (i>=300 && i<400) {
+				queueFour.add(Animals.get(i));
+			} else if (i>=400 && i<500) {
+				queueFive.add(Animals.get(i));
+			} else if (i>=500 && i<600) {
+				queueSix.add(Animals.get(i));
+			} else if (i>=600 && i<700) {
+				queueSeven.add(Animals.get(i));
+			} else if (i>=700 && i<800) {
+				queueEight.add(Animals.get(i));
+			} else if (i>=800 && i<900) {
+				queueNine.add(Animals.get(i));
+			} else {
+				queueTen.add(Animals.get(i));
+			}
+		}
+
+		// System.out.println(queueOne);
+		// System.out.println(queueTwo);
+		// System.out.println(queueOne.toArray()[1].getClass().getSimpleName());
+		// System.out.println("Queue 1: " + queueOne.size());
+				
+	}
+	
+	public void assignMedical() {
+		
+		String queue = null;
+		
+		for (Staff staff : Employees) {
+			if (staff.getClass().getSimpleName().equals("Veterinarian")) {
+				if (map.size()==0) {
+					map.put(staff , queueOne);
+				} else if (map.size()==1) {
+					map.put(staff , queueTwo);
+				} else if (map.size()==2) {
+					map.put(staff , queueThree);
+				} else if (map.size()==3) {
+					map.put(staff , queueFour);
+				} else if (map.size()==4) {
+					map.put(staff , queueFive);
+				} else if (map.size()==5) {
+					map.put(staff , queueSix);
+				}  else if (map.size()==6) {
+					map.put(staff , queueSeven);
+				}  else if (map.size()==7) {
+					map.put(staff , queueEight);
+				} else if (map.size()==8) {
+					map.put(staff , queueNine);
+				} else {
+					map.put(staff , queueTen);
+				}
+			}
+		}
+		System.out.println(map);
 	}
 
 }
