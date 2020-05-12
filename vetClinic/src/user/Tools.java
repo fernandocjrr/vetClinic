@@ -28,8 +28,6 @@ public class Tools {
 
 	ArrayList<Queue<Animal>> queueArray = new ArrayList<Queue<Animal>>();
 
-
-
 	HashMap<Staff, Queue> map = new HashMap<Staff, Queue>();
 
 	String[] firstNames = { "Jack", "James", "Daniel", "Conor", "Sean", "Adam", "Ryan", "Michael", "Harry", "Noah",
@@ -402,7 +400,6 @@ public class Tools {
 			Queue<Animal> queue = new LinkedList<Animal>(); // cria uma queue 10x
 			for (int n = 0; n < queueSize; n++) { // Loop 100x (queueSize)
 				queue.add(Animals.get((i * queueSize) + n));
-
 			}
 			queueArray.add(queue);
 		}
@@ -411,13 +408,13 @@ public class Tools {
 	public void assignMedical() {
 
 		int mapCount = 0;
-		
-		for (int i = 0 ; i < Employees.size() ; i++) {								//Loop 30x (employees)
-			if (Employees.get(i).getClass().getSimpleName().equals("Veterinarian")) {		//If employee is a veterinarian
-				map.put(Employees.get(i) , queueArray.get(mapCount));
-					mapCount ++;
-				}
+
+		for (int i = 0; i < Employees.size(); i++) { // Loop 30x (employees)
+			if (Employees.get(i).getClass().getSimpleName().equals("Veterinarian")) { // If employee is a veterinarian
+				map.put(Employees.get(i), queueArray.get(mapCount));
+				mapCount++;
 			}
+		}
 	}
 
 	public int countVet() {

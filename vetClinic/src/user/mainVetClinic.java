@@ -8,9 +8,10 @@ public class mainVetClinic {
 
 		tools.GenerateEmployees();
 		tools.GenerateAnimals();
-
 		tools.animalQueue();
 		tools.assignMedical();
+		
+		MainMenu();
 		
 
 	}
