@@ -405,23 +405,33 @@ public class Tools {
 
 	public void listAnimalsAssiged(String vetName) {
 
-		for (Map.Entry<Staff, Queue> pet : map.entrySet()){
-			Staff key = pet.getKey();						
+		for (Map.Entry<Staff, Queue> pet : map.entrySet()) {
+			Staff key = pet.getKey();
 			Queue values = pet.getValue();
-			ArrayList<Animal> petValues = new ArrayList <Animal> (values);
-			
+			ArrayList<Animal> petValues = new ArrayList<Animal>(values);
+
 			if (key.getName().equals(vetName)) {
-				
-				for (int i = 0 ; i < petValues.size() ; i ++) {
-					System.out.println("Pet Name: " + petValues.get(i).getName() 
-							 + "\nType: " + petValues.get(i).getClass().getSimpleName() 
-							 + "\nAge: " + petValues.get(i).getAge()
-							 + "\nMedical Condition: " + petValues.get(i).getMedCondition()
-							 + "\n\n==============================\n");
+
+				for (int i = 0; i < petValues.size(); i++) {
+					System.out.println(i+1 + "> Pet Name: " + petValues.get(i).getName() 
+									       + "    Type: "	+ petValues.get(i).getClass().getSimpleName()
+							               + "    Medical Condition: " + petValues.get(i).getMedCondition());
 				}
 			}
 		}
-		
+	}
+	
+	public void checkoutAnimal(String vetName) {
+
+		for (Map.Entry<Staff, Queue> pet : map.entrySet()) {
+			Staff key = pet.getKey();
+			Queue values = pet.getValue();
+
+			if (key.getName().equals(vetName)) {
+				values.remove();
+				System.out.println("Checked out\n");
+			}
+		}
 	}
 
 	public static int getInput(String prompt) {

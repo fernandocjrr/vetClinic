@@ -1,13 +1,5 @@
 package user;
 
-import java.awt.List;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Queue;
-
-import animals.Animal;
-import staff.Staff;
-
 public class mainVetClinic {
 
 	Tools tools = new Tools();
@@ -111,8 +103,7 @@ public class mainVetClinic {
 			userOption = Tools.getInput("1>   List all animals.\n" 
 								+ "2>   List animals by various types.\n"
 								+ "3>   Search for a specific animal by name.\n"
-								+ "4>   List all the animals assigned to a member of medical staff.\n"
-								+ "5>   List the order in which pets will be looked after by a particular member of the medical staff.\n\n"
+								+ "4>   List pets queue by veterinarian / Pet Check out.\n\n"
 								+ "0>   Back.\n");
 
 			if (userOption == 1) {
@@ -126,8 +117,6 @@ public class mainVetClinic {
 				System.out.println("\n\n==============================\n");
 				tools.search("animal", userInput);
 			} else if (userOption == 4) {
-
-			} else if (userOption == 5) {
 				System.out.println("\n\n\n\n\n\n\n\n\n");
 				orderPetByStaff();
 				back = true;
@@ -240,8 +229,8 @@ public class mainVetClinic {
 				if (userOption == i + 1) {
 										
 					tools.listAnimalsAssiged(tools.vetList().get(i));
-					
-					System.out.println(tools.map);
+					back = true;
+					checkAnimalOut(tools.vetList().get(i));
 					
 				} else if (userOption == 0) {
 					System.out.println("\n\n\n\n\n\n\n\n\n");
@@ -257,6 +246,33 @@ public class mainVetClinic {
 
 	}
 
+	
+	public void checkAnimalOut(String vetName) {
+
+		int userOption = 0;
+		boolean back = false;
+
+		System.out.println("=============================\n" 
+						 + "       Veterinary Clinic     \n"
+						 + "=============================\n" 
+						 + "         PET CHECKOUT        \n");
+		do {
+			userOption = Tools.getInput("1>   Checkout next pet in line.\n\n"  
+									  + "0>   Back.\n");
+
+			if (userOption == 1) {
+				tools.checkoutAnimal(vetName);
+			} else if (userOption == 0) {
+				System.out.println("\n\n\n\n\n\n\n\n\n");
+				back = true;
+				orderPetByStaff();
+			} else {
+				System.out.println("That is not an option.\n"); // in case user type an option that doesnt exist
+			}
+
+		} while (!back);
+
+	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
