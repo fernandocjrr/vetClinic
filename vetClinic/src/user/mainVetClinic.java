@@ -1,5 +1,13 @@
 package user;
 
+import java.awt.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Queue;
+
+import animals.Animal;
+import staff.Staff;
+
 public class mainVetClinic {
 
 	Tools tools = new Tools();
@@ -27,8 +35,8 @@ public class mainVetClinic {
 						 + "          MAIN MENU          \n");
 		do {
 			userOption = Tools.getInput("1>   Staff Menu.\n" 
-								+ "2>   Animal Menu.\n\n" 
-								+ "0>   Exit.\n");
+									  + "2>   Animal Menu.\n\n" 
+									  + "0>   Exit.\n");
 
 			if (userOption == 1) {
 				System.out.println("\n\n\n\n\n\n\n\n\n");
@@ -42,7 +50,7 @@ public class mainVetClinic {
 				System.out.println("Program Finished!");
 				exit = true;
 			} else {
-				System.out.println("That is not an option."); // in case user type an option that doesn`t exist
+				System.out.println("That is not an option.\n"); // in case user type an option that doesn`t exist
 			}
 
 		} while (!exit);
@@ -75,6 +83,7 @@ public class mainVetClinic {
 
 			} else if (userOption == 4) {
 				String userInput = Tools.getStringInput("Type the name of the employee:");
+				System.out.println("\n\n==============================\n");
 				tools.search("employee", userInput);
 				
 			} else if (userOption == 0) {
@@ -82,7 +91,7 @@ public class mainVetClinic {
 				back = true;
 				MainMenu();
 			} else {
-				System.out.println("That is not an option."); // in case user type an option that doesnt exist
+				System.out.println("That is not an option.\n"); // in case user type an option that doesnt exist
 			}
 
 		} while (!back);
@@ -114,17 +123,21 @@ public class mainVetClinic {
 				back = true;
 			} else if (userOption == 3) {
 				String userInput = Tools.getStringInput("Type the name of the animal:");
+				System.out.println("\n\n==============================\n");
 				tools.search("animal", userInput);
 			} else if (userOption == 4) {
 
 			} else if (userOption == 5) {
-
+				System.out.println("\n\n\n\n\n\n\n\n\n");
+				orderPetByStaff();
+				back = true;
+				
 			} else if (userOption == 0) {
 				System.out.println("\n\n\n\n\n\n\n\n\n");
 				back = true;
 				MainMenu();
 			} else {
-				System.out.println("That is not an option."); // in case user type an option that doesnt exist
+				System.out.println("That is not an option.\n"); // in case user type an option that doesnt exist
 			}
 
 		} while (!back);
@@ -163,7 +176,7 @@ public class mainVetClinic {
 				back = true;
 				staffMenu();
 			} else {
-				System.out.println("That is not an option."); // in case user type an option that doesnt exist
+				System.out.println("That is not an option.\n"); // in case user type an option that doesnt exist
 			}
 
 		} while (!back);
@@ -202,7 +215,42 @@ public class mainVetClinic {
 				back = true;
 				animalMenu();
 			} else {
-				System.out.println("That is not an option."); // in case user type an option that doesnt exist
+				System.out.println("That is not an option.\n"); // in case user type an option that doesnt exist
+			}
+
+		} while (!back);
+
+	}
+	
+	
+	public void orderPetByStaff() {
+		int userOption = 0;
+		boolean back = false;
+		
+		
+
+		System.out.println("=============================\n" 
+						 + "       Veterinary Clinic     \n"
+						 + "=============================\n" 
+						 + "         CHOOSE STAFF        \n");
+		do {
+			userOption = Tools.getInput(tools.printVetMenu() + "\n0>   Back.\n");
+
+			for (int i = 0; i < tools.vetList().size(); i++) {
+				if (userOption == i + 1) {
+										
+					tools.listAnimalsAssiged(tools.vetList().get(i));
+					
+					System.out.println(tools.map);
+					
+				} else if (userOption == 0) {
+					System.out.println("\n\n\n\n\n\n\n\n\n");
+					back = true;
+					animalMenu();
+				}
+			}
+			if (userOption > tools.vetList().size()) {
+				System.out.println("That is not an option.\n"); // in case user type an option that doesnt exist
 			}
 
 		} while (!back);

@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Random;
 
@@ -28,7 +30,7 @@ public class Tools {
 
 	ArrayList<Queue<Animal>> queueArray = new ArrayList<Queue<Animal>>();
 
-	HashMap<Staff, Queue> map = new HashMap<Staff, Queue>();
+	HashMap<Staff, Queue> map = new LinkedHashMap<Staff, Queue>();
 
 	String[] firstNames = { "Jack", "James", "Daniel", "Conor", "Sean", "Adam", "Ryan", "Michael", "Harry", "Noah",
 			"Thomas", "Alex", "Luke", "Oisin", "Charlie", "Patrick", "Cian", "Liam", "Darragh", "Dylan", "Jamie",
@@ -259,71 +261,80 @@ public class Tools {
 		}
 	}
 
-	public void EmployeesList() {
-		for (Staff staff : Employees) {
+	public void printList(String type, int index) {
+		if (type.equals("staff")) {
 			String cla = null;
-			if (staff.getClass().getSimpleName().equals("HR_Staff")) {
+			if (Employees.get(index).getClass().getSimpleName().equals("HR_Staff")) {
 				cla = "Human Resource";
-			} else if (staff.getClass().getSimpleName().equals("Trainee_Vet")) {
+			} else if (Employees.get(index).getClass().getSimpleName().equals("Trainee_Vet")) {
 				cla = "Trainee Veterinarian";
 			} else {
-				cla = staff.getClass().getSimpleName();
+				cla = Employees.get(index).getClass().getSimpleName();
 			}
-			System.out.println(
-					"Employee Name: " + staff.getName() + "\nEmployee ID: " + staff.getId() + "\nJob Position: " + cla
-							+ "\nSalary Level: " + staff.getSalaryLevel() + "\n\n==============================\n");
+			System.out.println("Employee Name: " + Employees.get(index).getName() 
+							 + "\nEmployee ID: " + Employees.get(index).getId() 
+							 + "\nJob Position: " + cla 
+							 + "\nSalary Level: " + Employees.get(index).getSalaryLevel() 
+							 + "\n\n==============================\n");
+		}
+
+		if (type.equals("animal")) {
+			System.out.println("Pet Name: " + Animals.get(index).getName() 
+							 + "\nType: " + Animals.get(index).getClass().getSimpleName() 
+							 + "\nAge: " + Animals.get(index).getAge()
+							 + "\nMedical Condition: " + Animals.get(index).getMedCondition()
+							 + "\n\n==============================\n");
+		}
+	}
+
+	public void EmployeesList() {
+		int position = 0;
+
+		for (Staff staff : Employees) {
+			printList("staff", position);
+			position++;
 		}
 	}
 
 	public void EmployeesListByCategory(String category) {
+		int position = 0;
 		for (Staff staff : Employees) {
-			String cla = null;
-
 			if (staff.getClass().getSimpleName().equals(category)) {
-				if (staff.getClass().getSimpleName().equals("HR_Staff")) {
-					cla = "Human Resource";
-				} else if (staff.getClass().getSimpleName().equals("Trainee_Vet")) {
-					cla = "Trainee Veterinarian";
-				} else {
-					cla = staff.getClass().getSimpleName();
-				}
-				System.out.println("Employee Name: " + staff.getName() + "\nEmployee ID: " + staff.getId()
-						+ "\nJob Position: " + cla + "\nSalary Level: " + staff.getSalaryLevel()
-						+ "\n\n==============================\n");
+				printList("staff", position);
 			}
+			position++;
 		}
 
 	}
 
 	public void AnimalsList() {
+		int position = 0;
 		for (Animal animal : Animals) {
-			System.out.println("Pet Name: " + animal.getName() + "\nType: " + animal.getClass().getSimpleName()
-					+ "\nAge: " + animal.getAge() + "\nMedical Condition: " + animal.getMedCondition()
-					+ "\n\n==============================\n");
+			printList("animal", position);
+			position++;
 		}
 	}
 
 	public void AnimalsListByType(String type) {
-
+		int position = 0;
 		for (Animal animal : Animals) {
 			if (animal.getClass().getSimpleName().equals(type)) {
-				System.out.println("Pet Name: " + animal.getName() + "\nType: " + animal.getClass().getSimpleName()
-						+ "\nAge: " + animal.getAge() + "\nMedical Condition: " + animal.getMedCondition()
-						+ "\n========================");
+				printList("animal", position);
 			}
+			position++;
 		}
 	}
 
 	public void search(String type, String name) {
 		boolean found = false;
 		if (type == "employee") {
+			int position = 0;
 			for (Staff staff : Employees) {
 				if (staff.getName().equals(name)) {
 					found = true;
-					System.out.println("\n\n==============================\n" + "Employee Name: " + staff.getName()
-							+ "\nEmployee ID: " + staff.getId() + "\nJob Position: " + staff.getClass().getSimpleName()
-							+ "\nSalary Level: " + staff.getSalaryLevel() + "\n==============================\n");
+					printList("staff", position);
 				}
+				position++;
 			}
 			if (found == false) {
 				System.out.println("Not Found!\n");
@@ -331,19 +342,86 @@ public class Tools {
 		}
 
 		if (type == "animal") {
+			int position = 0;
 			for (Animal animal : Animals) {
 				if (animal.getName().equals(name)) {
 					found = true;
-					System.out.println("\n\n========================\n" + "Pet Name: " + animal.getName() + "\nType: "
-							+ animal.getClass().getSimpleName() + "\nAge: " + animal.getAge() + "\nMedical Condition: "
-							+ animal.getMedCondition() + "\n========================\n");
+					printList("animal", position);
 				}
+				position++;
 			}
 			if (found == false) {
 				System.out.println("Not Found!\n");
 			}
 		}
 
+	}
+
+	public void animalQueue() {
+
+		int queueSize = Animals.size() / countVet();
+
+		for (int i = 0; i < countVet(); i++) { // loop 10x (countVet)
+			Queue<Animal> queue = new LinkedList<Animal>(); // cria uma queue 10x
+			for (int n = 0; n < queueSize; n++) { // Loop 100x (queueSize)
+				queue.add(Animals.get((i * queueSize) + n));
+			}
+			queueArray.add(queue);
+		}
+	}
+
+	public void assignMedical() {
+
+		int mapCount = 0;
+
+		for (int i = 0; i < Employees.size(); i++) { // Loop 30x (employees)
+			if (Employees.get(i).getClass().getSimpleName().equals("Veterinarian")) { // If employee is a veterinarian
+				map.put(Employees.get(i), queueArray.get(mapCount));
+				mapCount++;
+			}
+		}
+	}
+
+	public int countVet() {
+		int count = 0;
+		for (Staff staff : Employees) {
+			if (staff.getClass().getSimpleName().equals("Veterinarian")) {
+				count++;
+			}
+		}
+		return count;
+	}
+
+	public ArrayList<String> vetList() {
+		ArrayList<String> names = new ArrayList<String>();
+
+		for (Staff staff : Employees) {
+			if (staff.getClass().getSimpleName().equals("Veterinarian")) {
+				names.add(staff.getName());
+			}
+		}
+		return names;
+	}
+
+	public void listAnimalsAssiged(String vetName) {
+
+		for (Map.Entry<Staff, Queue> pet : map.entrySet()){
+			Staff key = pet.getKey();						
+			Queue values = pet.getValue();
+			ArrayList<Animal> petValues = new ArrayList <Animal> (values);
+			
+			if (key.getName().equals(vetName)) {
+				
+				for (int i = 0 ; i < petValues.size() ; i ++) {
+					System.out.println("Pet Name: " + petValues.get(i).getName() 
+							 + "\nType: " + petValues.get(i).getClass().getSimpleName() 
+							 + "\nAge: " + petValues.get(i).getAge()
+							 + "\nMedical Condition: " + petValues.get(i).getMedCondition()
+							 + "\n\n==============================\n");
+				}
+			}
+		}
+		
 	}
 
 	public static int getInput(String prompt) {
@@ -392,39 +470,16 @@ public class Tools {
 		return input; // return user input
 	}
 
-	public void animalQueue() {
-
-		int queueSize = Animals.size() / countVet();
-
-		for (int i = 0; i < countVet(); i++) { // loop 10x (countVet)
-			Queue<Animal> queue = new LinkedList<Animal>(); // cria uma queue 10x
-			for (int n = 0; n < queueSize; n++) { // Loop 100x (queueSize)
-				queue.add(Animals.get((i * queueSize) + n));
-			}
-			queueArray.add(queue);
-		}
-	}
-
-	public void assignMedical() {
-
-		int mapCount = 0;
-
-		for (int i = 0; i < Employees.size(); i++) { // Loop 30x (employees)
-			if (Employees.get(i).getClass().getSimpleName().equals("Veterinarian")) { // If employee is a veterinarian
-				map.put(Employees.get(i), queueArray.get(mapCount));
-				mapCount++;
+	public String printVetMenu() {
+		String op = null;
+		for (int i = 0; i < vetList().size(); i++) {
+			if (op == null) {
+				op = i + 1 + ">   " + vetList().get(i) + "\n";
+			} else {
+				op = op + (i + 1) + ">   " + vetList().get(i) + "\n";
 			}
 		}
-	}
-
-	public int countVet() {
-		int count = 0;
-		for (Staff staff : Employees) {
-			if (staff.getClass().getSimpleName().equals("Veterinarian")) {
-				count++;
-			}
-		}
-		return count;
+		return op;
 	}
 
 }
