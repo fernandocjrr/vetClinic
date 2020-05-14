@@ -24,6 +24,11 @@ import staff.Trainee_Vet;
 import staff.Veterinarian;
 
 public class Tools {
+	
+	/*
+	 * 1 - Global ArrayLists, and HashMap declaration
+	 * 2 - Strings for random generate staff names, pet names and medical conditions
+	 */
 
 	ArrayList<Staff> Employees = new ArrayList<Staff>();
 	ArrayList<Animal> Animals = new ArrayList<Animal>();
@@ -179,6 +184,14 @@ public class Tools {
 	public Tools() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	/* getRandomName(String type) 
+	 * 
+	 * Method to generate random names, type must be informed,
+	 * if staff, it will generate name + surname for a staff 
+	 * if pet, it will generate a pet name.
+	 * Returns a string containing the name.
+	 */
 
 	public String getRandomName(String type) {
 		Random r = new Random();
@@ -193,6 +206,13 @@ public class Tools {
 			return "Animal type should be added in method call";
 		}
 	}
+	
+	/*getRandomAge() {
+	 * 
+	 * Method to generate a believable pet age
+	 * Between 0 and 19 years. (0 should be included since pet can have few months old)
+	 * return integer containing age.
+	 */
 
 	public int getRandomAge() {
 		Random r = new Random();
@@ -203,11 +223,26 @@ public class Tools {
 		return age;
 	}
 
+	/* getRandomCondition()
+	 * 
+	 * Generate random medical condition for pets.
+	 * return string containing condition. 
+	 */	
+	
 	public String getRandomCondition() {
 		Random r = new Random();
 		String condition = conditions[r.nextInt(conditions.length)];
 		return condition;
 	}
+	
+	/* GenerateEmployees()
+	 * 
+	 * Method will generate 40 staffs with random names and adding them to Employees ArrayList.
+	 * Salary level must be informed here
+	 * 
+	 * - 10 Veterinarians, nurses and trainee veterinarians (30 medical staffs);
+	 * - 5 Receptionist and human resources (10 admin staff);
+	 */
 
 	public void GenerateEmployees() {
 
@@ -237,6 +272,13 @@ public class Tools {
 			Employees.add(HRs);
 		}
 	}
+	
+	/* GenerateAnimals()
+	 * 
+	 * Method will generate 1000 pets, with random name, age and medical condition and adding them to Animals ArrayList
+	 * - 200 Dogs, cats, hamsters, birds and rabbits(1000 animals);
+	 */
+
 
 	public void GenerateAnimals() {
 		for (int i = 0; i < 200; i++) {
@@ -260,6 +302,13 @@ public class Tools {
 			Animals.add(Rab);
 		}
 	}
+	
+	/* printList(String type, int index)
+	 * 
+	 * Method takes type (staff or pet) and index and prints its information from their ArrayList
+	 * this was created to clean the mainVetClinic class, since it is used in more than 3 options
+	 * To print nicely ifs were created in order to change HR_Staff for Human Resource and Trainee_Vet for Trainee Veterinarian
+	 */
 
 	public void printList(String type, int index) {
 		if (type.equals("staff")) {
@@ -287,6 +336,10 @@ public class Tools {
 		}
 	}
 
+	/* EmployeesList()
+	 * 
+	 * Method to list and print all staff from ArrayList Employees
+	 */
 	public void EmployeesList() {
 		int position = 0;
 
@@ -296,6 +349,12 @@ public class Tools {
 		}
 	}
 
+	/* EmployeesListByCategory(String category)
+	 * 
+	 * Method will take a string with the option selected by the user (Profession)
+	 * and will list all staffs in that position in Employees ArrayList and print them.
+	 */
+	
 	public void EmployeesListByCategory(String category) {
 		int position = 0;
 		for (Staff staff : Employees) {
@@ -306,6 +365,11 @@ public class Tools {
 		}
 
 	}
+	
+	/* AnimalsList()
+	 * 
+	 * Method will list all animals in Animals ArrayList and print them
+	 */
 
 	public void AnimalsList() {
 		int position = 0;
@@ -314,6 +378,12 @@ public class Tools {
 			position++;
 		}
 	}
+	
+	/* AnimalsListByType(String type)
+	 * 
+	 * Method will take a string with the option selected by the user (animal type)
+	 * and will list all animals of that type in Animals ArrayList and print them.
+	 */
 
 	public void AnimalsListByType(String type) {
 		int position = 0;
@@ -325,6 +395,13 @@ public class Tools {
 		}
 	}
 
+	/* search(String type, String name)
+	 * 
+	 * Method takes two strings as input, type (employee or animal) and name (of staff  or pet)
+	 * if type = employee the method will look for the name in the Employees ArraList and if find it print it, if not print Not Found.
+	 * if type = animal the method will look for the name in the Animals ArraList and if find it print it, if not print Not Found.
+	 */
+	
 	public void search(String type, String name) {
 		boolean found = false;
 		if (type == "employee") {
@@ -356,6 +433,21 @@ public class Tools {
 		}
 
 	}
+	
+	/* animalQueue()
+	 * 
+	 * Method will divide animals in equal parts (defined by the number of veterinarians)
+	 * and put them in queues that will be inserted in a ArrayList of queues.
+	 * 
+	 * Since only veterinarians will be assigned to pets (nurses and trainee vets can not be assigned without a veterinarian
+	 * so I decided only them should be listed)
+	 * 
+	 * To define the number of animals per queue, it was used total of animals divides by total of veterinarians
+	 * Knowing this, one queue for each veterinarian is created and added in the queueArray ArrayList
+	 * 
+	 * Resulting in a ArrayList with queues inside 
+	 * No matter the number of veterinarians, the queues will be created in order to equally divide the pets
+	 */
 
 	public void animalQueue() {
 
@@ -369,18 +461,32 @@ public class Tools {
 			queueArray.add(queue);
 		}
 	}
+	
+	/*assignMedical()
+	 * 
+	 * Method takes all employees in the Veterinarian class and put them as keys in a hashmap while
+	 * every queue in the queueArray List is the value
+	 * 
+	 * This is how each veterinarian is assigned to a queue of animals
+	 */
 
 	public void assignMedical() {
 
 		int mapCount = 0;
 
-		for (int i = 0; i < Employees.size(); i++) { // Loop 30x (employees)
-			if (Employees.get(i).getClass().getSimpleName().equals("Veterinarian")) { // If employee is a veterinarian
+		for (int i = 0; i < Employees.size(); i++) {
+			if (Employees.get(i).getClass().getSimpleName().equals("Veterinarian")) {
 				map.put(Employees.get(i), queueArray.get(mapCount));
 				mapCount++;
 			}
 		}
 	}
+	
+	/* countVet()
+	 * 
+	 * Method count every employee with class Veterinarian and count them
+	 * return the count number
+	 */
 
 	public int countVet() {
 		int count = 0;
@@ -392,6 +498,13 @@ public class Tools {
 		return count;
 	}
 
+	/* ArrayList<String> vetList()
+	 * 
+	 * Method list all veterinarian names and add them in a ArrayList
+	 * in order to display them as options in the interface, so user can choose which 
+	 * veterinarian queue must be displayed
+	 */
+	
 	public ArrayList<String> vetList() {
 		ArrayList<String> names = new ArrayList<String>();
 
@@ -402,6 +515,16 @@ public class Tools {
 		}
 		return names;
 	}
+	
+	/* listAnimalsAssiged(String vetName)
+	 * 
+	 * Method takes a string as input and will check all the HashMap items and for each of them
+	 * keys are put in a Staff type variable so .getName() method can be used to compare with user input
+	 * values are put in a queue type variable and than in a Animal type variable allowing to get all the 
+	 * information needed to be displayed (getName(), getAge())
+	 * 
+	 * If the input name is the same as one in the keys, the values of that key (Animal queue) will be printed
+	 */
 
 	public void listAnimalsAssiged(String vetName) {
 
@@ -421,6 +544,15 @@ public class Tools {
 		}
 	}
 	
+	/* checkoutAnimal(String vetName)
+	 * 
+	 * Method will take a string as input and look for the same name in all the keys of map HashMap
+	 * (Similar as the previous method)
+	 * 
+	 * If the input is found in any of the keys, the first value will be removed from the queue, checking out the pet and putting the
+	 * next one in queue in first position
+	 */
+	
 	public void checkoutAnimal(String vetName) {
 
 		for (Map.Entry<Staff, Queue> pet : map.entrySet()) {
@@ -433,6 +565,8 @@ public class Tools {
 			}
 		}
 	}
+	
+	
 
 	public static int getInput(String prompt) {
 
@@ -480,6 +614,11 @@ public class Tools {
 		return input; // return user input
 	}
 
+	/* printVetMenu()
+	 * 
+	 * Method will print all the veterinarian names as options to be chosen by the user
+	 */
+	
 	public String printVetMenu() {
 		String op = null;
 		for (int i = 0; i < vetList().size(); i++) {

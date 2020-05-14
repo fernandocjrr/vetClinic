@@ -5,7 +5,6 @@ public abstract class Animal {
 	private String name;
 	private int age;
 	private String medCondition;
-	private String Doctor;
 	
 	
 	public Animal () {
