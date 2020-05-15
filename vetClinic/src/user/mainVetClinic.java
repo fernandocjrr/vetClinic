@@ -23,6 +23,7 @@ public class mainVetClinic {
 		tools.GenerateAnimals();
 		tools.animalQueue();
 		tools.assignMedical();
+		tools.assignTask();
 		
 		MainMenu();
 		
@@ -85,12 +86,13 @@ public class mainVetClinic {
 				staffByCategory();
 				back = true;
 			} else if (userOption == 3) {
-
+				System.out.println("\n\n\n\n\n\n\n\n\n");
+				listTasks();
+				back = true;
 			} else if (userOption == 4) {
 				String userInput = Tools.getStringInput("Type the name of the employee:");
 				System.out.println("\n\n==============================\n");
-				tools.search("employee", userInput);
-				
+				tools.search("employee", userInput);				
 			} else if (userOption == 0) {
 				System.out.println("\n\n\n\n\n\n\n\n\n");
 				back = true;
@@ -144,6 +146,40 @@ public class mainVetClinic {
 
 		} while (!back);
 
+	}
+	
+	public void listTasks() {
+		int userOption = 0;
+		boolean back = false;
+		
+		
+
+		System.out.println("=============================\n" 
+						 + "       Veterinary Clinic     \n"
+						 + "=============================\n" 
+						 + "           TASK LIST         \n");
+		do {
+			userOption = Tools.getInput(tools.printTaskMenu() + "\n0>   Back.\n");
+
+			for (int i = 0; i < tools.tempTask.size(); i++) {
+				if (userOption == i + 1) {
+										
+					tools.listStaffByTask(i);
+					System.out.println("\n");
+					back = true;
+					listTasks();
+					
+				} else if (userOption == 0) {
+					System.out.println("\n\n\n\n\n\n\n\n\n");
+					back = true;
+					animalMenu();
+				}
+			}
+			if (userOption > tools.tempTask.size()) {
+				System.out.println("That is not an option.\n"); // in case user type an option that doesnt exist
+			}
+
+		} while (!back);		
 	}
 
 	public void staffByCategory() {

@@ -20,6 +20,7 @@ import staff.HR_Staff;
 import staff.Nurse;
 import staff.Receptionist;
 import staff.Staff;
+import staff.Task;
 import staff.Trainee_Vet;
 import staff.Veterinarian;
 
@@ -27,15 +28,23 @@ public class Tools {
 	
 	/*
 	 * 1 - Global ArrayLists, and HashMap declaration
-	 * 2 - Strings for random generate staff names, pet names and medical conditions
+	 * 2 - Array of Strings for random generate staff names, tasks, pet names and medical conditions
 	 */
 
 	ArrayList<Staff> Employees = new ArrayList<Staff>();
 	ArrayList<Animal> Animals = new ArrayList<Animal>();
+	ArrayList<Task> Tasks = new ArrayList <Task>(); 
+	
 
 	ArrayList<Queue<Animal>> queueArray = new ArrayList<Queue<Animal>>();
-
+	ArrayList<String> tempTask = new ArrayList<String>();
+	
 	HashMap<Staff, Queue> map = new LinkedHashMap<Staff, Queue>();
+
+	String[] tasks = {"Organize and schedule meetings and appointments", "Contact lists maintenance",
+			"Produce and distribute correspondence memos, letters or forms", "Order office supplies",
+			"Book travel arrangements", "Research and presentation creatation", "Prepare and monitor invoices",
+			"Resolve administrative problems", "Photocopy and print out documents", "Coordinate repairs to clinic equipment"};
 
 	String[] firstNames = { "Jack", "James", "Daniel", "Conor", "Sean", "Adam", "Ryan", "Michael", "Harry", "Noah",
 			"Thomas", "Alex", "Luke", "Oisin", "Charlie", "Patrick", "Cian", "Liam", "Darragh", "Dylan", "Jamie",
@@ -233,6 +242,18 @@ public class Tools {
 		Random r = new Random();
 		String condition = conditions[r.nextInt(conditions.length)];
 		return condition;
+	}
+	
+	/* getRandomTask()
+	 * 
+	 * Generate random Task for admin staffs.
+	 * return string containing task. 
+	 */		
+	
+	public String getRandomTask() {
+		Random r = new Random();
+		String task = tasks[r.nextInt(tasks.length)];
+		return task;
 	}
 	
 	/* GenerateEmployees()
@@ -566,6 +587,21 @@ public class Tools {
 		}
 	}
 	
+	/* assignTask()
+	 * 
+	 * Assign a random tasks for each of the admin staffs (receptionist and Human resources)
+	 */
+	
+	public void assignTask() {
+		for (Staff staff : Employees) {
+			if (staff.getClass().getSimpleName().equals("Receptionist") || 
+				staff.getClass().getSimpleName().equals("HR_Staff")) {
+				Task admStaff = new Task(staff, getRandomTask());
+				Tasks.add(admStaff);
+			}
+		}
+	}
+	
 	/* getInput(String prompt)
 	 * 
 	 * Method gets a String as input and first print it.
@@ -646,6 +682,50 @@ public class Tools {
 			}
 		}
 		return op;
+	}
+	
+	/* printTaskMenu()
+	 * 
+	 * Method will print all 
+	 */
+	
+	public String printTaskMenu() {
+		String op = null;
+
+		for (int n = 0; n < Tasks.size(); n++) {
+			if (tempTask.contains(Tasks.get(n).getTask()) == false) {
+				tempTask.add(Tasks.get(n).getTask());
+			}
+		}
+
+		for (int i = 0; i < tempTask.size(); i++) {
+			if (op == null) {
+				op = i + 1 + ">   " + tempTask.get(i) + "\n";
+			} else {
+				op = op + (i + 1) + ">   " + tempTask.get(i) + "\n";
+			}
+		}
+		return op;
+	}
+
+	public void listStaffByTask(int index) {
+		int n = 0;
+		String cla = null;
+		for (int i = 0; i < Tasks.size(); i++) {
+			if (tempTask.get(index).equals(Tasks.get(i).getTask())) {
+
+				if (Tasks.get(i).getEmp().getClass().getSimpleName().equals("HR_Staff")) {
+					cla = "Human Resource";
+				} else {
+					cla = Tasks.get(i).getEmp().getClass().getSimpleName();
+				}
+
+				System.out.println(n + 1 + "> Employee name: " + Tasks.get(i).getEmp().getName() 
+										 + "    ID: " + Tasks.get(i).getEmp().getId() 
+										 + "    Position: " + cla);
+				n++;
+			}
+		}
 	}
 
 }
