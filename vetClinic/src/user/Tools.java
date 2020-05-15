@@ -41,10 +41,10 @@ public class Tools {
 	
 	HashMap<Staff, Queue> map = new LinkedHashMap<Staff, Queue>();
 
-	String[] tasks = {"Organize and schedule meetings and appointments", "Contact lists maintenance",
-			"Produce and distribute correspondence memos, letters or forms", "Order office supplies",
-			"Book travel arrangements", "Research and presentation creatation", "Prepare and monitor invoices",
-			"Resolve administrative problems", "Photocopy and print out documents", "Coordinate repairs to clinic equipment"};
+	String[] tasks = {"Organize and schedule meetings and appointments.", "Contact lists maintenance.",
+			"Produce and distribute correspondence memos, letters or forms.", "Order office supplies.",
+			"Book travel arrangements.", "Research and presentation creatation.", "Prepare and monitor invoices.",
+			"Resolve administrative problems.", "Photocopy and print out documents.", "Coordinate repairs to clinic equipment."};
 
 	String[] firstNames = { "Jack", "James", "Daniel", "Conor", "Sean", "Adam", "Ryan", "Michael", "Harry", "Noah",
 			"Thomas", "Alex", "Luke", "Oisin", "Charlie", "Patrick", "Cian", "Liam", "Darragh", "Dylan", "Jamie",
@@ -345,7 +345,7 @@ public class Tools {
 							 + "\nEmployee ID: " + Employees.get(index).getId() 
 							 + "\nJob Position: " + cla 
 							 + "\nSalary Level: " + Employees.get(index).getSalaryLevel() 
-							 + "\n\n==============================\n");
+							 + "\n\n-------------------------------\n");
 		}
 
 		if (type.equals("animal")) {
@@ -353,7 +353,7 @@ public class Tools {
 							 + "\nType: " + Animals.get(index).getClass().getSimpleName() 
 							 + "\nAge: " + Animals.get(index).getAge()
 							 + "\nMedical Condition: " + Animals.get(index).getMedCondition()
-							 + "\n\n==============================\n");
+							 + "\n\n-------------------------------\n");
 		}
 	}
 
@@ -613,15 +613,14 @@ public class Tools {
 	 * returns the user input as integer.
 	 */	
 
-	public static int getInput(String prompt) {
+	public static int getInput() {
 
 		int input = 0;
 		boolean valid;
 		BufferedReader myReader = new BufferedReader(new InputStreamReader(System.in));
-
+		
 		do {
-			System.out.println(prompt);
-
+			
 			try {
 				input = Integer.parseInt(myReader.readLine());
 
@@ -672,26 +671,31 @@ public class Tools {
 	 * Method will print all the veterinarian names as options to be chosen by the user
 	 */
 	
-	public String printVetMenu() {
+	public void printVetMenu() {
 		String op = null;
+		String leftAlignFormat = "| %-75s |%n";
 		for (int i = 0; i < vetList().size(); i++) {
 			if (op == null) {
-				op = i + 1 + ">   " + vetList().get(i) + "\n";
+				op = "[" + (i + 1) + "]   " + vetList().get(i);
 			} else {
-				op = op + (i + 1) + ">   " + vetList().get(i) + "\n";
+				op = "[" + (i + 1) + "]   " + vetList().get(i);
 			}
+			System.out.format(leftAlignFormat,"          " + op);
 		}
-		return op;
 	}
 	
 	/* printTaskMenu()
 	 * 
-	 * Method will print all 
+	 * Method will first check if Tasks ArrayList have any repeated value.
+	 * It will store only unique values in tempTask ArrayList, that way there is no repeated options to be cbosen by he user.
+	 * 
+	 * print all the tasks
 	 */
 	
-	public String printTaskMenu() {
+	public void printTaskMenu() {
 		String op = null;
-
+		String leftAlignFormat = "| %-93s |%n";
+		
 		for (int n = 0; n < Tasks.size(); n++) {
 			if (tempTask.contains(Tasks.get(n).getTask()) == false) {
 				tempTask.add(Tasks.get(n).getTask());
@@ -700,13 +704,20 @@ public class Tools {
 
 		for (int i = 0; i < tempTask.size(); i++) {
 			if (op == null) {
-				op = i + 1 + ">   " + tempTask.get(i) + "\n";
+				op = "[" +  (i + 1) + "]   " + tempTask.get(i);
 			} else {
-				op = op + (i + 1) + ">   " + tempTask.get(i) + "\n";
+				op ="[" +  (i + 1) + "]   " + tempTask.get(i);
 			}
+			System.out.format(leftAlignFormat,"          " + op);
 		}
-		return op;
+		
 	}
+	
+	/* listStaffByTask(int index)
+	 * 
+	 * Method takes and index as input (tempTask index), and compare the tasks from tempTask with Tasks ArrayList
+	 * if the task is the same, the name of those staff assigned for those tasks will be printed
+	 */
 
 	public void listStaffByTask(int index) {
 		int n = 0;

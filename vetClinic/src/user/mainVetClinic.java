@@ -6,7 +6,11 @@ public class mainVetClinic {
 
 	public mainVetClinic() {
 
-		/*
+		/*	Name: FERNANDO FERNANDEZ CASTELLON JUNIOR
+		 *  Student ID: 2019149
+		 * 	Vet Clinic continuous assessment
+		 * 
+		 * 
 		 * When program is initialized, the first thing before even showing the menu
 		 * it will generate all employees and animals, 
 		 * equally divide the animals into queues and insert them in a ArrayList,
@@ -29,20 +33,33 @@ public class mainVetClinic {
 		
 
 	}
+	
+	// ==============================================================================================================================
+	// ========================================================= MAIN MENU =========================================================
+	// ==============================================================================================================================
 
 	public void MainMenu() {
 
 		int userOption = 0;
 		boolean exit = false;
 
-		System.out.println("=============================\n" 
-						 + "       Veterinary Clinic     \n"
-						 + "=============================\n" 
-						 + "          MAIN MENU          \n");
+		String leftAlignFormat = "| %-75s |%n";
+		
+		System.out.format("+=============================================================================+%n");
+		System.out.format("|============================= VETERINARY CLINIC =============================|%n");
+		System.out.format("+=============================================================================+%n");
+		System.out.format("|                                  MAIN MENU                                  |%n");
+		System.out.format("+-----------------------------------------------------------------------------+%n");
+		System.out.format(leftAlignFormat,"");
+		System.out.format(leftAlignFormat,"          " + "[1]   Staff Menu.");
+		System.out.format(leftAlignFormat,"          " + "[2]   Animal Menu.");
+		System.out.format(leftAlignFormat,"");
+		System.out.format(leftAlignFormat,"          " + "[0]   Exit.");
+		System.out.format(leftAlignFormat,"");
+		System.out.format("+=============================================================================+%n");
+		
 		do {
-			userOption = Tools.getInput("1>   Staff Menu.\n" 
-									  + "2>   Animal Menu.\n\n" 
-									  + "0>   Exit.\n");
+			userOption = Tools.getInput();
 
 			if (userOption == 1) {
 				System.out.println("\n\n\n\n\n\n\n\n\n");
@@ -62,84 +79,58 @@ public class mainVetClinic {
 		} while (!exit);
 
 	}
+	
+	// ==============================================================================================================================
+	// ========================================================= STAFF MENU =========================================================
+	// ==============================================================================================================================
 
 	public void staffMenu() {
 
 		int userOption = 0;
 		boolean back = false;
+		
+		String leftAlignFormat = "| %-75s |%n";
+		
+		System.out.format("+=============================================================================+%n");
+		System.out.format("|============================= VETERINARY CLINIC =============================|%n");
+		System.out.format("+=============================================================================+%n");
+		System.out.format("|                                 STAFF MENU                                  |%n");
+		System.out.format("+-----------------------------------------------------------------------------+%n");
+		System.out.format(leftAlignFormat,"");
+		System.out.format(leftAlignFormat,"          " + "[1]   List all staff");
+		System.out.format(leftAlignFormat,"          " + "[2]   List staff by categories.");
+		System.out.format(leftAlignFormat,"          " + "[3]   List all Admin staff performing a certain task.");
+		System.out.format(leftAlignFormat,"          " + "[4]   Search for a specific member of staff by name.");
+		System.out.format(leftAlignFormat,"");
+		System.out.format(leftAlignFormat,"          " + "[0]   Exit.");
+		System.out.format(leftAlignFormat,"");
+		System.out.format("+=============================================================================+%n");
 
-		System.out.println("=============================\n" 
-						 + "       Veterinary Clinic     \n"
-						 + "=============================\n" 
-						 + "          STAFF MENU         \n");
 		do {
-			userOption = Tools.getInput("1>   List all staff.\n" 
-								+ "2>   List staff by categories.\n"
-								+ "3>   List all Admin staff performing a certain task.\n"
-								+ "4>   Search for a specific member of staff by name.\n\n" 
-								+ "0>   Back.\n");
+			userOption = Tools.getInput();
 
 			if (userOption == 1) {
 				tools.EmployeesList();
+				staffMenu();	
+				back = true;			
 			} else if (userOption == 2) {
 				System.out.println("\n\n\n\n\n\n\n\n\n");
 				staffByCategory();
-				back = true;
+				back = true;				
 			} else if (userOption == 3) {
 				System.out.println("\n\n\n\n\n\n\n\n\n");
 				listTasks();
 				back = true;
 			} else if (userOption == 4) {
 				String userInput = Tools.getStringInput("Type the name of the employee:");
-				System.out.println("\n\n==============================\n");
-				tools.search("employee", userInput);				
+				System.out.println("\n\n-------------------------------\n");
+				tools.search("employee", userInput);
+				staffMenu();
+				back = true;				
 			} else if (userOption == 0) {
 				System.out.println("\n\n\n\n\n\n\n\n\n");
-				back = true;
 				MainMenu();
-			} else {
-				System.out.println("That is not an option.\n"); // in case user type an option that doesnt exist
-			}
-
-		} while (!back);
-
-	}
-
-	public void animalMenu() {
-
-		int userOption = 0;
-		boolean back = false;
-
-		System.out.println("=============================\n" 
-						 + "       Veterinary Clinic     \n"
-						 + "=============================\n" 
-						 + "         ANIMAL MENU         \n");
-		do {
-			userOption = Tools.getInput("1>   List all animals.\n" 
-								+ "2>   List animals by various types.\n"
-								+ "3>   Search for a specific animal by name.\n"
-								+ "4>   List pets queue by veterinarian / Pet Check out.\n\n"
-								+ "0>   Back.\n");
-
-			if (userOption == 1) {
-				tools.AnimalsList();
-			} else if (userOption == 2) {
-				System.out.println("\n\n\n\n\n\n\n\n\n");
-				animalByType();
 				back = true;
-			} else if (userOption == 3) {
-				String userInput = Tools.getStringInput("Type the name of the animal:");
-				System.out.println("\n\n==============================\n");
-				tools.search("animal", userInput);
-			} else if (userOption == 4) {
-				System.out.println("\n\n\n\n\n\n\n\n\n");
-				orderPetByStaff();
-				back = true;
-				
-			} else if (userOption == 0) {
-				System.out.println("\n\n\n\n\n\n\n\n\n");
-				back = true;
-				MainMenu();
 			} else {
 				System.out.println("That is not an option.\n"); // in case user type an option that doesnt exist
 			}
@@ -148,31 +139,101 @@ public class mainVetClinic {
 
 	}
 	
+	// ==============================================================================================================================
+	// ======================================================== ANIMAL MENU =========================================================
+	// ==============================================================================================================================
+
+	public void animalMenu() {
+
+		int userOption = 0;
+		boolean back = false;
+
+		String leftAlignFormat = "| %-75s |%n";
+		
+		System.out.format("+=============================================================================+%n");
+		System.out.format("|============================= VETERINARY CLINIC =============================|%n");
+		System.out.format("+=============================================================================+%n");
+		System.out.format("|                                 ANIMAL MENU                                 |%n");
+		System.out.format("+-----------------------------------------------------------------------------+%n");
+		System.out.format(leftAlignFormat,"");
+		System.out.format(leftAlignFormat,"          " + "[1]   List all animals.");
+		System.out.format(leftAlignFormat,"          " + "[2]   List animals by various types.");
+		System.out.format(leftAlignFormat,"          " + "[3]   Search for a specific animal by name.");
+		System.out.format(leftAlignFormat,"          " + "[4]   List pets queue by veterinarian / Pet Check out.");
+		System.out.format(leftAlignFormat,"");
+		System.out.format(leftAlignFormat,"          " + "[0]   Exit.");
+		System.out.format(leftAlignFormat,"");
+		System.out.format("+=============================================================================+%n");
+		do {
+			userOption = Tools.getInput();
+
+			if (userOption == 1) {
+				tools.AnimalsList();
+				animalMenu();
+				back = true;
+			} else if (userOption == 2) {
+				System.out.println("\n\n\n\n\n\n\n\n\n");
+				animalByType();
+				back = true;
+			} else if (userOption == 3) {
+				String userInput = Tools.getStringInput("Type the name of the animal:");
+				System.out.println("\n\n-------------------------------\n");
+				tools.search("animal", userInput);
+				animalMenu();
+				back = true;
+			} else if (userOption == 4) {
+				System.out.println("\n\n\n\n\n\n\n\n\n");
+				orderPetByStaff();
+				back = true;
+			} else if (userOption == 0) {
+				System.out.println("\n\n\n\n\n\n\n\n\n");
+				MainMenu();
+				back = true;
+			} else {
+				System.out.println("That is not an option.\n"); // in case user type an option that doesnt exist
+			}
+
+		} while (!back);
+
+	}
+	
+	// ==============================================================================================================================
+	// ========================================================= TASK MENU ==========================================================
+	// ==============================================================================================================================
+	
 	public void listTasks() {
 		int userOption = 0;
 		boolean back = false;
 		
-		
+		String leftAlignFormat = "| %-93s |%n";
 
-		System.out.println("=============================\n" 
-						 + "       Veterinary Clinic     \n"
-						 + "=============================\n" 
-						 + "           TASK LIST         \n");
+		System.out.format("+===============================================================================================+%n");
+		System.out.format("|====================================== VETERINARY CLINIC ======================================|%n");
+		System.out.format("+===============================================================================================+%n");
+		System.out.format("+                                          TASK  MENU                                           +%n");
+		System.out.format("+-----------------------------------------------------------------------------------------------+%n");
+		System.out.format(leftAlignFormat,"");
+		tools.printTaskMenu();
+		System.out.format(leftAlignFormat,"");
+		System.out.format(leftAlignFormat,"          " + "[0]   Exit.");
+		System.out.format(leftAlignFormat,"");
+		System.out.format("+===============================================================================================+%n");
+		
 		do {
-			userOption = Tools.getInput(tools.printTaskMenu() + "\n0>   Back.\n");
+			userOption = Tools.getInput();
 
 			for (int i = 0; i < tools.tempTask.size(); i++) {
 				if (userOption == i + 1) {
 										
 					tools.listStaffByTask(i);
 					System.out.println("\n");
-					back = true;
 					listTasks();
+					back = true;
 					
 				} else if (userOption == 0) {
 					System.out.println("\n\n\n\n\n\n\n\n\n");
+					staffMenu();
 					back = true;
-					animalMenu();
 				}
 			}
 			if (userOption > tools.tempTask.size()) {
@@ -181,38 +242,60 @@ public class mainVetClinic {
 
 		} while (!back);		
 	}
+	
+	// ==============================================================================================================================
+	// ====================================================== STAFF CATEGORIES ======================================================
+	// ==============================================================================================================================
 
 	public void staffByCategory() {
 
 		int userOption = 0;
 		boolean back = false;
 
-		System.out.println("=============================\n" 
-						 + "       Veterinary Clinic     \n"
-						 + "=============================\n" 
-						 + "      STAFF CATEGORIES       \n");
+		String leftAlignFormat = "| %-75s |%n";
+		
+		System.out.format("+=============================================================================+%n");
+		System.out.format("|============================= VETERINARY CLINIC =============================|%n");
+		System.out.format("+=============================================================================+%n");
+		System.out.format("|                               STAFF CATEGORIES                              |%n");
+		System.out.format("+-----------------------------------------------------------------------------+%n");
+		System.out.format(leftAlignFormat,"");
+		System.out.format(leftAlignFormat,"          " + "[1]   Veterinarians.");
+		System.out.format(leftAlignFormat,"          " + "[2]   Nurses.");
+		System.out.format(leftAlignFormat,"          " + "[3]   Trainee Veterinarians.");
+		System.out.format(leftAlignFormat,"          " + "[4]   Receptionists");
+		System.out.format(leftAlignFormat,"          " + "[5]   Human Resource");
+		System.out.format(leftAlignFormat,"");
+		System.out.format(leftAlignFormat,"          " + "[0]   Exit.");
+		System.out.format(leftAlignFormat,"");
+		System.out.format("+=============================================================================+%n");
 		do {
-			userOption = Tools.getInput("1>   Veterinarians.\n" 
-								+ "2>   Nurses.\n"
-								+ "3>   Trainee Veterinarians.\n"
-								+ "4>   Receptionists\n" 
-								+ "5>   Human Resource\n\n" 
-								+ "0>   Back.\n");
+			userOption = Tools.getInput();
 
 			if (userOption == 1) {
 				tools.EmployeesListByCategory("Veterinarian");
+				staffByCategory();
+				back = true;
 			} else if (userOption == 2) {
 				tools.EmployeesListByCategory("Nurse");
+				staffByCategory();
+				back = true;
 			} else if (userOption == 3) {
 				tools.EmployeesListByCategory("Trainee_Vet");
+				staffByCategory();
+				back = true;
 			} else if (userOption == 4) {
 				tools.EmployeesListByCategory("Receptionist");
+				staffByCategory();
+				back = true;
 			} else if (userOption == 5) {
 				tools.EmployeesListByCategory("HR_Staff");
+				staffByCategory();
+				back = true;
 			} else if (userOption == 0) {
 				System.out.println("\n\n\n\n\n\n\n\n\n");
-				back = true;
 				staffMenu();
+				back = true;
 			} else {
 				System.out.println("That is not an option.\n"); // in case user type an option that doesnt exist
 			}
@@ -220,38 +303,60 @@ public class mainVetClinic {
 		} while (!back);
 
 	}
+	
+	// ==============================================================================================================================
+	// ======================================================== ANIMAL TYPES ========================================================
+	// ==============================================================================================================================
 	
 	public void animalByType() {
 
 		int userOption = 0;
 		boolean back = false;
-
-		System.out.println("=============================\n" 
-						 + "       Veterinary Clinic     \n"
-						 + "=============================\n" 
-						 + "         ANIMAL TYPES        \n");
+		String leftAlignFormat = "| %-75s |%n";
+		
+		System.out.format("+=============================================================================+%n");
+		System.out.format("|============================= VETERINARY CLINIC =============================|%n");
+		System.out.format("+=============================================================================+%n");
+		System.out.format("|                                 ANIMAL TYPES                                |%n");
+		System.out.format("+-----------------------------------------------------------------------------+%n");
+		System.out.format(leftAlignFormat,"");
+		System.out.format(leftAlignFormat,"          " + "[1]   Dogs.");
+		System.out.format(leftAlignFormat,"          " + "[2]   Cats");
+		System.out.format(leftAlignFormat,"          " + "[3]   Birds.");
+		System.out.format(leftAlignFormat,"          " + "[4]   Rabbit");
+		System.out.format(leftAlignFormat,"          " + "[5]   Hamsters");
+		System.out.format(leftAlignFormat,"");
+		System.out.format(leftAlignFormat,"          " + "[0]   Exit.");
+		System.out.format(leftAlignFormat,"");
+		System.out.format("+=============================================================================+%n");
+		
 		do {
-			userOption = Tools.getInput("1>   Dogs.\n" 
-								+ "2>   Cats.\n"
-								+ "3>   Birds.\n"
-								+ "4>   Rabbits\n" 
-								+ "5>   Hamsters\n\n" 
-								+ "0>   Back.\n");
+			userOption = Tools.getInput();
 
 			if (userOption == 1) {
 				tools.AnimalsListByType("Dog");
+				animalByType();
+				back = true;
 			} else if (userOption == 2) {
 				tools.AnimalsListByType("Cat");
+				animalByType();
+				back = true;
 			} else if (userOption == 3) {
 				tools.AnimalsListByType("Bird");
+				animalByType();
+				back = true;
 			} else if (userOption == 4) {
 				tools.AnimalsListByType("Rabbit");
+				animalByType();
+				back = true;
 			} else if (userOption == 5) {
 				tools.AnimalsListByType("Hamster");
+				animalByType();
+				back = true;
 			} else if (userOption == 0) {
 				System.out.println("\n\n\n\n\n\n\n\n\n");
-				back = true;
 				animalMenu();
+				back = true;
 			} else {
 				System.out.println("That is not an option.\n"); // in case user type an option that doesnt exist
 			}
@@ -260,31 +365,42 @@ public class mainVetClinic {
 
 	}
 	
+	// ==============================================================================================================================
+	// ========================================================== PET QUEUE =========================================================
+	// ==============================================================================================================================
 	
 	public void orderPetByStaff() {
 		int userOption = 0;
 		boolean back = false;
-		
-		
 
-		System.out.println("=============================\n" 
-						 + "       Veterinary Clinic     \n"
-						 + "=============================\n" 
-						 + "         CHOOSE STAFF        \n");
+		String leftAlignFormat = "| %-75s |%n";
+		
+		System.out.format("+=============================================================================+%n");
+		System.out.format("|============================= VETERINARY CLINIC =============================|%n");
+		System.out.format("+=============================================================================+%n");
+		System.out.format("|                                 CHOOSE STAFF                                |%n");
+		System.out.format("+-----------------------------------------------------------------------------+%n");
+		System.out.format(leftAlignFormat,"");
+		tools.printVetMenu();
+		System.out.format(leftAlignFormat,"");
+		System.out.format(leftAlignFormat,"          " + "[0]   Exit.");
+		System.out.format(leftAlignFormat,"");
+		System.out.format("+=============================================================================+%n");
+		
 		do {
-			userOption = Tools.getInput(tools.printVetMenu() + "\n0>   Back.\n");
+			userOption = Tools.getInput();
 
 			for (int i = 0; i < tools.vetList().size(); i++) {
 				if (userOption == i + 1) {
 										
 					tools.listAnimalsAssiged(tools.vetList().get(i));
-					back = true;
 					checkAnimalOut(tools.vetList().get(i));
+					back = true;
 					
 				} else if (userOption == 0) {
 					System.out.println("\n\n\n\n\n\n\n\n\n");
-					back = true;
 					animalMenu();
+					back = true;
 				}
 			}
 			if (userOption > tools.vetList().size()) {
@@ -295,26 +411,39 @@ public class mainVetClinic {
 
 	}
 
+	// ==============================================================================================================================
+	// ======================================================== PET CHECKOOUT =======================================================
+	// ==============================================================================================================================
 	
 	public void checkAnimalOut(String vetName) {
 
 		int userOption = 0;
 		boolean back = false;
-
-		System.out.println("=============================\n" 
-						 + "       Veterinary Clinic     \n"
-						 + "=============================\n" 
-						 + "         PET CHECKOUT        \n");
+		String leftAlignFormat = "| %-75s |%n";
+		
+		System.out.format("+=============================================================================+%n");
+		System.out.format("|============================= VETERINARY CLINIC =============================|%n");
+		System.out.format("+=============================================================================+%n");
+		System.out.format("|                                PET CHECKOOUT                                |%n");
+		System.out.format("+-----------------------------------------------------------------------------+%n");
+		System.out.format(leftAlignFormat,"");
+		System.out.format(leftAlignFormat,"          " + "[1]   Checkout next pet in line.");
+		System.out.format(leftAlignFormat,"");
+		System.out.format(leftAlignFormat,"          " + "[0]   Exit.");
+		System.out.format(leftAlignFormat,"");
+		System.out.format("+=============================================================================+%n");
+		
 		do {
-			userOption = Tools.getInput("1>   Checkout next pet in line.\n\n"  
-									  + "0>   Back.\n");
+			userOption = Tools.getInput();
 
 			if (userOption == 1) {
 				tools.checkoutAnimal(vetName);
+				orderPetByStaff();
+				back = true;
 			} else if (userOption == 0) {
 				System.out.println("\n\n\n\n\n\n\n\n\n");
-				back = true;
 				orderPetByStaff();
+				back = true;
 			} else {
 				System.out.println("That is not an option.\n"); // in case user type an option that doesnt exist
 			}
