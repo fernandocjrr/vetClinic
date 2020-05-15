@@ -566,52 +566,69 @@ public class Tools {
 		}
 	}
 	
-	
+	/* getInput(String prompt)
+	 * 
+	 * Method gets a String as input and first print it.
+	 * than it will gets user input parse the string argument as a signed decimal integer
+	 * and store the input in the input variable.
+	 * if the input is not a number, valid (boolean variable) will remain false and it wont leave the loop
+	 * until user insert a valid input (integer)
+	 * 
+	 * returns the user input as integer.
+	 */	
 
 	public static int getInput(String prompt) {
 
-		int input = 0; // variable to store user input
-		boolean valid; // variable to check if input is a number
-		BufferedReader myReader = new BufferedReader(new InputStreamReader(System.in)); // bufferedreader declaration
+		int input = 0;
+		boolean valid;
+		BufferedReader myReader = new BufferedReader(new InputStreamReader(System.in));
 
 		do {
-			System.out.println(prompt); // print message in prompt variable
+			System.out.println(prompt);
 
 			try {
-				input = Integer.parseInt(myReader.readLine()); // Parses the string argument as a signed decimal integer
-																// and store the inserted value in input variable
-				valid = true; // if valid true leaves the loop
+				input = Integer.parseInt(myReader.readLine());
+
+				valid = true;
 
 			} catch (Exception e) {
-				System.out.println("That is not a number!"); // if not an number display error message
-				valid = false; // keep user in the loop to ask for a valid input
+				System.out.println("That is not a number!");
+				valid = false;
 			}
-		} while (!valid); // finish loop when valid = true
+		} while (!valid);
 
-		return input; // return user input
+		return input;
 	}
+	
+	/* String getStringInput(String prompt)
+	 * 
+	 * Same as previous method, but this one will return a String (for search functionality)
+	 * value inserted by user wont be parsed as a integer.
+	 * 
+	 * returns a string that should be the name of an animal or employee
+	 */
 
 	public static String getStringInput(String prompt) {
 
-		String input = null; // variable to store user input
-		boolean valid; // variable to check if input is a number
-		BufferedReader myReader = new BufferedReader(new InputStreamReader(System.in)); // bufferedreader declaration
+		String input = null;
+		boolean valid; 
+		BufferedReader myReader = new BufferedReader(new InputStreamReader(System.in)); 
 
 		do {
-			System.out.println(prompt); // print message in prompt variable
+			System.out.println(prompt); 
 
 			try {
-				input = myReader.readLine(); // Parses the string argument as a signed decimal integer
-												// and store the inserted value in input variable
-				valid = true; // if valid true leaves the loop
+				input = myReader.readLine(); 
+												
+				valid = true;
 
 			} catch (Exception e) {
 				System.out.println("Somethig went wrong, try again!");
-				valid = false; // keep user in the loop to ask for a valid input
+				valid = false;
 			}
-		} while (!valid); // finish loop when valid = true
+		} while (!valid);
 
-		return input; // return user input
+		return input;
 	}
 
 	/* printVetMenu()

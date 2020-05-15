@@ -6,6 +6,19 @@ public class mainVetClinic {
 
 	public mainVetClinic() {
 
+		/*
+		 * When program is initialized, the first thing before even showing the menu
+		 * it will generate all employees and animals, 
+		 * equally divide the animals into queues and insert them in a ArrayList,
+		 * and it will create a HashMap, where the key will be all veterinarians and values the queues of animals,
+		 * so every veterinarian will be assigned to a queue of animals to treat, in order.
+		 * 
+		 * Only veterinarians will be assigned to the queue of animals because even if nurses and trainee vets can be assigned, they
+		 * should not be responsible for the pets, specially without the supervision of a veterinarian.
+		 * 
+		 * After this, main menu will be loaded.
+		 */
+		
 		tools.GenerateEmployees();
 		tools.GenerateAnimals();
 		tools.animalQueue();
