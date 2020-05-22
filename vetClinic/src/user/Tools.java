@@ -3,11 +3,11 @@ package user;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.Map;
-import java.util.Queue;
+import java.util.Map.Entry;
 import java.util.Random;
 
 import animals.Animal;
@@ -36,10 +36,10 @@ public class Tools {
 	ArrayList<Task> Tasks = new ArrayList <Task>(); 
 	
 
-	ArrayList<Queue<Animal>> queueArray = new ArrayList<Queue<Animal>>();
+	ArrayList<queue> queueArray = new ArrayList<queue>();
 	ArrayList<String> tempTask = new ArrayList<String>();
 	
-	HashMap<Staff, Queue> map = new LinkedHashMap<Staff, Queue>();
+	HashMap<Staff, queue> map = new LinkedHashMap<Staff, queue>();
 
 	String[] tasks = {"Organize and schedule meetings and appointments.", "Contact lists maintenance.",
 			"Produce and distribute correspondence memos, letters or forms.", "Order office supplies.",
@@ -191,7 +191,7 @@ public class Tools {
 			"Urinary Tract Infection", "Uveitis", "Whipworms", "Worms", "Wounds", "Yeast Infection" };
 
 	public Tools() {
-		// TODO Auto-generated constructor stub
+		
 	}
 	
 	/* getRandomName(String type) 
@@ -322,6 +322,7 @@ public class Tools {
 			Animal Rab = new Rabbit(getRandomName("pet"), getRandomAge(), getRandomCondition());
 			Animals.add(Rab);
 		}
+		 Collections.shuffle(Animals);
 	}
 	
 	/* printList(String type, int index)
@@ -361,6 +362,7 @@ public class Tools {
 	 * 
 	 * Method to list and print all staff from ArrayList Employees
 	 */
+	@SuppressWarnings("unused")
 	public void EmployeesList() {
 		int position = 0;
 
@@ -392,6 +394,7 @@ public class Tools {
 	 * Method will list all animals in Animals ArrayList and print them
 	 */
 
+	@SuppressWarnings("unused")
 	public void AnimalsList() {
 		int position = 0;
 		for (Animal animal : Animals) {
@@ -475,9 +478,9 @@ public class Tools {
 		int queueSize = Animals.size() / countVet();
 
 		for (int i = 0; i < countVet(); i++) { // loop 10x (countVet)
-			Queue<Animal> queue = new LinkedList<Animal>(); // cria uma queue 10x
+			queue queue = new queue (queueSize);			
 			for (int n = 0; n < queueSize; n++) { // Loop 100x (queueSize)
-				queue.add(Animals.get((i * queueSize) + n));
+				queue.Enqueue(Animals.get((i * queueSize) + n));
 			}
 			queueArray.add(queue);
 		}
@@ -540,7 +543,7 @@ public class Tools {
 	/* listAnimalsAssiged(String vetName)
 	 * 
 	 * Method takes a string as input and will check all the HashMap items and for each of them
-	 * keys are put in a Staff type variable so .getName() method can be used to compare with user input
+	 * keys are put in a Staff type variable so .getName() method can be used to compare with user input.
 	 * values are put in a queue type variable and than in a Animal type variable allowing to get all the 
 	 * information needed to be displayed (getName(), getAge())
 	 * 
@@ -549,17 +552,27 @@ public class Tools {
 
 	public void listAnimalsAssiged(String vetName) {
 
-		for (Map.Entry<Staff, Queue> pet : map.entrySet()) {
+		for (Entry<Staff, queue> pet : map.entrySet()) {
 			Staff key = pet.getKey();
-			Queue values = pet.getValue();
-			ArrayList<Animal> petValues = new ArrayList<Animal>(values);
+			queue values = pet.getValue();
+			ArrayList<Animal> petValues = new ArrayList<Animal>();
+			int count = 0;
 
-			if (key.getName().equals(vetName)) {
+			if (key.getName().equals(vetName)) {						 // if input name is equal to one of the names in the hasmap heys
+				for (int n = 0; n < values.Size() + count; n++) {		 // for loop passing for all the elements in the values variable
+					if (values.getAnimal(n) == null) {
+						count++;										 // if element = null, dont add to the arraylist and add one more loop cycle;
+					} else {
+						petValues.add(values.getAnimal(n));
+
+					}
+				}
 
 				for (int i = 0; i < petValues.size(); i++) {
-					System.out.println(i+1 + "> Pet Name: " + petValues.get(i).getName() 
-									       + "    Type: "	+ petValues.get(i).getClass().getSimpleName()
-							               + "    Medical Condition: " + petValues.get(i).getMedCondition());
+
+					System.out.println(i + 1 + "> Pet Name: " + petValues.get(i).getName() + "    Type: "
+							+ petValues.get(i).getClass().getSimpleName() + "    Medical Condition: "
+							+ petValues.get(i).getMedCondition());
 				}
 			}
 		}
@@ -576,13 +589,15 @@ public class Tools {
 	
 	public void checkoutAnimal(String vetName) {
 
-		for (Map.Entry<Staff, Queue> pet : map.entrySet()) {
+		for (Map.Entry<Staff, queue> pet : map.entrySet()) {
 			Staff key = pet.getKey();
-			Queue values = pet.getValue();
+			queue values = pet.getValue();
 
 			if (key.getName().equals(vetName)) {
-				values.remove();
+				
+				values.Dequeue();
 				System.out.println("Checked out\n");
+				
 			}
 		}
 	}
